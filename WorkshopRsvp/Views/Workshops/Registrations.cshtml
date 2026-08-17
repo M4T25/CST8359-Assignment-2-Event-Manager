@@ -1,0 +1,29 @@
+@model IReadOnlyList<WorkshopRsvp.Models.Rsvp>
+@{ ViewData["Title"] = "Registrations"; }
+<style>
+    .registrations-table { table-layout: fixed; width: 100%; }
+    .registrations-table th, .registrations-table td { overflow-wrap: anywhere; }
+    .registrations-table th:nth-child(1) { width: 20%; }
+    .registrations-table th:nth-child(2) { width: 23%; }
+    .registrations-table th:nth-child(3) { width: 27%; }
+    .registrations-table th:nth-child(4), .registrations-table th:nth-child(5) { width: 15%; }
+    @@media (max-width: 700px) {
+        .registrations-table { font-size: .72rem; }
+        .registrations-table th, .registrations-table td { padding: .45rem .25rem; }
+        .display-6 { font-size: 2rem; }
+    }
+</style>
+<div class="d-flex justify-content-between align-items-end mb-4">
+    <div><p class="text-uppercase text-primary fw-bold mb-1">Database records</p><h1 class="display-6 fw-bold mb-0">All Registrations</h1></div>
+    <span class="badge bg-success fs-6">EF Core + SQLite</span>
+</div>
+<div class="table-responsive shadow-sm rounded">
+<table class="table table-striped table-hover align-middle mb-0 registrations-table">
+<thead class="table-dark"><tr><th>Name</th><th>Workshop</th><th>Email</th><th>Accommodation</th><th>Attending</th></tr></thead>
+<tbody>
+@foreach (var item in Model) {
+<tr><td class="fw-semibold">@item.FullName</td><td>@item.WorkshopTitle</td><td>@item.Email</td><td>@(item.NeedsAccommodation ? "Yes" : "No")</td><td>@(item.WillAttend ? "Yes" : "No")</td></tr>
+}
+</tbody></table></div>
+<p class="text-muted mt-3">These rows are queried from the Rsvps table through ApplicationDbContext.</p>
+<a class="btn btn-outline-secondary" asp-action="Index">Back</a>
