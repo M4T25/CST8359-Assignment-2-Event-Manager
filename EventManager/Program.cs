@@ -8,8 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
-var useInMemoryDatabase = builder.Environment.IsDevelopment()
-    && builder.Configuration.GetValue<bool>("Database:UseInMemory");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var useInMemoryDatabase = builder.Configuration.GetValue<bool>("Database:UseInMemory")
+    || string.IsNullOrWhiteSpace(connectionString);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -19,14 +20,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         return;
     }
 
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-        ?? throw new InvalidOperationException(
-            "Connection string 'DefaultConnection' is missing. Configure it with user-secrets or an Azure App Service setting.");
-    options.UseSqlServer(connectionString);
+    options.UseSqlServer(connectionString!);
 });
 builder.Services.AddScoped<IBannerStorageService, BannerStorageService>();
 builder.Services.AddControllersWithViews();
-if (builder.Environment.IsDevelopment())
+if (useInMemoryDatabase)
 {
     var keyPath = Path.Combine(Path.GetTempPath(), "EventManager-DataProtection-Keys");
     builder.Services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(keyPath));
@@ -48,15 +46,15 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-if (app.Environment.IsDevelopment())
+if (useInMemoryDatabase)
 {
     var localUploadsPath = app.Configuration["LocalUploads:Path"]
-        ?? Path.Combine(Path.GetTempPath(), "EventManagerUploads");
+        ?? Path.Combine(app.Environment.WebRootPath, "uploads");
     Directory.CreateDirectory(localUploadsPath);
     app.UseStaticFiles(new StaticFileOptions
     {
         FileProvider = new PhysicalFileProvider(localUploadsPath),
-        RequestPath = "/dev-uploads"
+        RequestPath = "/uploads"
     });
 }
 app.UseRouting();

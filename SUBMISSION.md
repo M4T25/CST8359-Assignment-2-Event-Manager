@@ -8,13 +8,13 @@
 ## Links
 
 - GitHub repository (`assignment2` branch): _Add your repository URL after pushing_
-- Azure App Service: _Add your deployed website URL_
+- Azure App Service: https://mattlab2-dxecezgvcyfnhudv.eastus-01.azurewebsites.net
 
 ## Screenshot checklist
 
-- [ ] Event list
-- [ ] Event details showing its banner image and attendees
-- [ ] Attendee list for one event
+- [x] Event list (`SubmissionScreenshots/01-event-list.png`)
+- [x] Event details showing its banner image and attendees (`SubmissionScreenshots/02-event-details-banner.png`)
+- [x] Attendee list for one event (`SubmissionScreenshots/03-attendee-list.png`)
 - [ ] Azure SQL `Events` table data
 - [ ] Azure SQL `Attendees` table data
 

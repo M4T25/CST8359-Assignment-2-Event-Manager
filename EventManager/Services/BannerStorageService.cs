@@ -28,12 +28,6 @@ public sealed class BannerStorageService(
             return await UploadToAzureAsync(file, blobName, connectionString, cancellationToken);
         }
 
-        if (!environment.IsDevelopment())
-        {
-            throw new InvalidOperationException(
-                "Azure Blob Storage is not configured. Set AzureBlobStorage__ConnectionString.");
-        }
-
         return await SaveLocallyAsync(file, blobName, cancellationToken);
     }
 
@@ -66,13 +60,13 @@ public sealed class BannerStorageService(
         CancellationToken cancellationToken)
     {
         var uploadsPath = configuration["LocalUploads:Path"]
-            ?? Path.Combine(Path.GetTempPath(), "EventManagerUploads");
+            ?? Path.Combine(environment.WebRootPath, "uploads");
         Directory.CreateDirectory(uploadsPath);
         var destination = Path.Combine(uploadsPath, fileName);
 
         await using var stream = File.Create(destination);
         await file.CopyToAsync(stream, cancellationToken);
-        return $"/dev-uploads/{fileName}";
+        return $"/uploads/{fileName}";
     }
 
     private static void Validate(IFormFile file)

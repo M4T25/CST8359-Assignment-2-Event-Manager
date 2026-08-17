@@ -16,13 +16,13 @@ CST8359 Assignment 2 - an ASP.NET Core MVC application for managing events and t
 - Attribute routes such as `/events/1/attendees` and `/events/1/attendees/create`
 - Banner upload on event creation and editing
 - Public Azure Blob Storage uploads with the resulting URL saved in the event record
-- Local banner storage fallback in the Development environment
+- Local banner storage fallback when Azure Storage is not configured
 - Responsive event list, details, forms, and attendee-management pages
 - Validation, anti-forgery protection, file type/size checks, and cascade deletion
 
 ## Local setup
 
-The development profile uses an in-memory database so the project runs without local credentials. From the repository root:
+The app uses its in-memory fallback when a SQL connection string is not configured, so it runs without local credentials and remains deployable for review. From the repository root:
 
 ```powershell
 dotnet restore EventManager.slnx
