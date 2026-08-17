@@ -1,0 +1,49 @@
+@model IEnumerable<Event>
+
+@{
+    ViewData["Title"] = "Events";
+}
+
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">Upcoming</span>
+        <h1>Events</h1>
+        <p>Create, update, and manage registrations from one place.</p>
+    </div>
+    <a asp-action="Create" class="btn btn-primary">Create new event</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="empty-state">
+        <h2>No events yet</h2>
+        <p>Create your first event to get started.</p>
+        <a asp-action="Create" class="btn btn-primary">Create event</a>
+    </div>
+}
+else
+{
+    <div class="event-grid">
+        @foreach (var item in Model)
+        {
+            <article class="event-card">
+                <a asp-action="Details" asp-route-id="@item.Id" class="event-card-image">
+                    <img src="@item.BannerUrl" alt="Banner for @item.Title" />
+                    <span class="date-tile"><strong>@item.Date.Day</strong>@item.Date.ToString("MMM")</span>
+                </a>
+                <div class="event-card-body">
+                    <p class="event-meta">@item.Date.ToString("dddd, MMMM d - h:mm tt")</p>
+                    <h2><a asp-action="Details" asp-route-id="@item.Id">@item.Title</a></h2>
+                    <p class="location">@item.Location</p>
+                    <div class="event-card-footer">
+                        <span>@item.Attendees.Count attendee@(item.Attendees.Count == 1 ? "" : "s")</span>
+                        <div class="action-links">
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a asp-controller="Attendees" asp-action="Index" asp-route-eventId="@item.Id">Attendees</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+}

@@ -1,0 +1,43 @@
+@model IEnumerable<Attendee>
+
+@{
+    ViewData["Title"] = "Manage Attendees";
+}
+
+<a asp-controller="Events" asp-action="Details" asp-route-id="@ViewBag.EventId" class="back-link">&larr; Back to event</a>
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">Guest list</span>
+        <h1>@ViewBag.EventTitle</h1>
+        <p>@Model.Count() registered attendee@(Model.Count() == 1 ? "" : "s")</p>
+    </div>
+    <a asp-action="Create" asp-route-eventId="@ViewBag.EventId" class="btn btn-primary">Add attendee</a>
+</div>
+
+<div class="table-card">
+    @if (!Model.Any())
+    {
+        <div class="empty-state"><h2>No attendees yet</h2><p>Add the first guest for this event.</p></div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead><tr><th>Name</th><th>Email</th><th class="text-end">Actions</th></tr></thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><span class="avatar avatar-small">@item.Name[..1].ToUpperInvariant()</span><strong>@item.Name</strong></td>
+                            <td><a href="mailto:@item.Email">@item.Email</a></td>
+                            <td class="text-end">
+                                <a asp-action="Edit" asp-route-eventId="@item.EventId" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                <a asp-action="Delete" asp-route-eventId="@item.EventId" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

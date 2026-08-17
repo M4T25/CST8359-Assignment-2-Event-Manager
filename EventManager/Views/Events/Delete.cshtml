@@ -1,0 +1,20 @@
+@model Event
+
+@{
+    ViewData["Title"] = "Delete Event";
+}
+
+<div class="confirm-card">
+    <span class="danger-icon">!</span>
+    <span class="eyebrow text-danger">Permanent action</span>
+    <h1>Delete @Model.Title?</h1>
+    <p>This will also remove every attendee registered for this event. This action cannot be undone.</p>
+    <dl class="summary-list">
+        <div><dt>Date</dt><dd>@Model.Date.ToString("MMMM d, yyyy - h:mm tt")</dd></div>
+        <div><dt>Location</dt><dd>@Model.Location</dd></div>
+    </dl>
+    <form asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post" class="form-actions">
+        <button type="submit" class="btn btn-danger">Delete event</button>
+        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-link">Cancel</a>
+    </form>
+</div>

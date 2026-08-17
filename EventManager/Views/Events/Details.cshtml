@@ -1,0 +1,48 @@
+@model Event
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<a asp-action="Index" class="back-link">&larr; All events</a>
+
+<article class="details-card">
+    <img class="details-banner" src="@Model.BannerUrl" alt="Banner for @Model.Title" />
+    <div class="details-content">
+        <p class="event-meta">@Model.Date.ToString("dddd, MMMM d, yyyy - h:mm tt")</p>
+        <h1>@Model.Title</h1>
+        <p class="details-location">@Model.Location</p>
+        <p class="details-description">@Model.Description</p>
+
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">Guest list</span>
+                <h2>Attendees <span class="count-badge">@Model.Attendees.Count</span></h2>
+            </div>
+            <a asp-controller="Attendees" asp-action="Create" asp-route-eventId="@Model.Id" class="btn btn-primary btn-sm">Add attendee</a>
+        </div>
+
+        @if (Model.Attendees.Any())
+        {
+            <div class="attendee-list">
+                @foreach (var attendee in Model.Attendees.OrderBy(a => a.Name))
+                {
+                    <div class="attendee-row">
+                        <span class="avatar">@attendee.Name[..1].ToUpperInvariant()</span>
+                        <div><strong>@attendee.Name</strong><span>@attendee.Email</span></div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="empty-inline">No attendees have signed up yet.</p>
+        }
+
+        <div class="details-actions">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit event</a>
+            <a asp-controller="Attendees" asp-action="Index" asp-route-eventId="@Model.Id" class="btn btn-outline-secondary">Manage attendees</a>
+            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-link text-danger">Delete event</a>
+        </div>
+    </div>
+</article>

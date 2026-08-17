@@ -1,0 +1,49 @@
+@model EventFormViewModel
+
+@{
+    ViewData["Title"] = "Create Event";
+}
+
+<div class="form-shell">
+    <span class="eyebrow">New event</span>
+    <h1>Create an event</h1>
+    <p>Enter the event details and upload a banner image.</p>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data" class="editor-form">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" placeholder="e.g., Cloud Developer Summit" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control" rows="5" placeholder="What should attendees know?"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-grid">
+            <div class="mb-3">
+                <label asp-for="Date" class="form-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Location" class="form-label"></label>
+                <input asp-for="Location" class="form-control" placeholder="Venue or Online" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-4">
+            <label asp-for="BannerImage" class="form-label"></label>
+            <input asp-for="BannerImage" class="form-control" type="file" accept="image/jpeg,image/png,image/gif,image/webp" />
+            <div class="form-text">JPG, PNG, GIF, or WebP. Maximum 5 MB.</div>
+            <span asp-validation-for="BannerImage" class="text-danger"></span>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Create event</button>
+            <a asp-action="Index" class="btn btn-link">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

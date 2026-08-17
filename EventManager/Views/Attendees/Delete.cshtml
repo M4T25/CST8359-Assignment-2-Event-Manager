@@ -1,0 +1,20 @@
+@model Attendee
+
+@{
+    ViewData["Title"] = "Remove Attendee";
+}
+
+<div class="confirm-card">
+    <span class="danger-icon">!</span>
+    <span class="eyebrow text-danger">@Model.Event?.Title</span>
+    <h1>Remove @Model.Name?</h1>
+    <p>This attendee will be removed from the event guest list.</p>
+    <dl class="summary-list">
+        <div><dt>Name</dt><dd>@Model.Name</dd></div>
+        <div><dt>Email</dt><dd>@Model.Email</dd></div>
+    </dl>
+    <form asp-action="DeleteConfirmed" asp-route-eventId="@Model.EventId" asp-route-id="@Model.Id" method="post" class="form-actions">
+        <button type="submit" class="btn btn-danger">Remove attendee</button>
+        <a asp-action="Index" asp-route-eventId="@Model.EventId" class="btn btn-link">Cancel</a>
+    </form>
+</div>
