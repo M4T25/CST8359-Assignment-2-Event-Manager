@@ -1,0 +1,10 @@
+CST8359 Lab 4 - Workshop RSVP with Entity Framework Core
+
+Student: Mateusz Gumienny
+Student Number: 041033057
+Username: Gumi0002
+
+GitHub lab4-ef branch:
+https://github.com/M4T25/CST8359-Assignment-2-Event-Manager/tree/lab4-ef
+
+The included Lab4_Registrations_Mateusz.png shows the completed database-backed Registrations page. The source includes the EF Core 8 packages, ApplicationDbContext, Rsvps DbSet, SQLite connection, InitialCreate migration, seed data, and asynchronous AsNoTracking database query.
