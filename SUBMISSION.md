@@ -8,7 +8,7 @@
 ## Links
 
 - GitHub repository (`assignment2` branch): https://github.com/M4T25/CST8359-Assignment-2-Event-Manager/tree/assignment2
-- Azure App Service: https://mattlab2-dxecezgvcyfnhudv.eastus-01.azurewebsites.net
+- Azure App Service: https://gumi0002-assignment2-eucyh0cjbgeybjfc.eastus-01.azurewebsites.net
 
 ## Screenshot checklist
 
